@@ -1,4 +1,4 @@
-package com.app.jpa.config.converter;
+package com.app.jpa.converter.impl;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -7,13 +7,14 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.app.jpa.converter.AbstractConverter;
 import com.app.jpa.db.entity.Autor;
 import com.app.jpa.db.entity.Libro;
 import com.app.jpa.dto.AutorDto;
 import com.app.jpa.dto.LibroDto;
 
 @Component
-public class LibroConverter {
+public class LibroConverter extends AbstractConverter<Libro, LibroDto>{
 
 	@Autowired
 	public LibroConverter () {
@@ -69,5 +70,5 @@ public class LibroConverter {
 	public void updateEntity (LibroDto dto, Libro entity) {
 		entity.setTitulo(dto.getTitulo());
 	}
-	
+
 }

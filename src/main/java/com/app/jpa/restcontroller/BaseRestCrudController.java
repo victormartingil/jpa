@@ -7,17 +7,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.app.jpa.service.CrudService;
 
-public abstract class BaseRestCrudController<Entity> {
+public abstract class BaseRestCrudController<Entity, Dto> {
 
-	protected final CrudService<Entity> service;
+	protected final CrudService<Entity, Dto> service;
 
-	public BaseRestCrudController(CrudService<Entity> service) {
+	public BaseRestCrudController(CrudService<Entity, Dto> service) {
 		this.service = service;
 	}
 
-	public ResponseEntity<String> add(@RequestBody Entity entity) throws Exception {
+	public ResponseEntity<String> add(@RequestBody Dto dto) throws Exception {
 		try {
-		service.create(entity);
+		service.create(dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -25,7 +25,7 @@ public abstract class BaseRestCrudController<Entity> {
 	}
 
 
-	public ResponseEntity<Entity> show(@PathVariable long id) {
+	public ResponseEntity<Dto> show(@PathVariable long id) {
 		return ResponseEntity.of(service.findById(id));
 	}
 

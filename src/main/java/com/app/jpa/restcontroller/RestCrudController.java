@@ -7,27 +7,27 @@ import com.app.jpa.service.CrudService;
 
 import java.util.List;
 
-public abstract class RestCrudController<Entity> extends BaseRestCrudController<Entity> {
+public abstract class RestCrudController<Entity, Dto> extends BaseRestCrudController<Entity, Dto> {
 
-	public RestCrudController(CrudService<Entity> service) {
+	public RestCrudController(CrudService<Entity, Dto> service) {
 		super(service);
 	}
 
 	@GetMapping("")
-	public List<Entity> list() {
+	public List<Dto> list() {
 		return service.findAll();
 	}
 
 	@Override
 	@GetMapping("{id}")
-	public ResponseEntity<Entity> show(@PathVariable long id) {
+	public ResponseEntity<Dto> show(@PathVariable long id) {
 		return super.show(id);
 	}
 
 	@Override
 	@PostMapping("")
-	public ResponseEntity<String> add(@RequestBody Entity entity) throws Exception {
-		return super.add(entity);
+	public ResponseEntity<String> add(@RequestBody Dto dto) throws Exception {
+		return super.add(dto);
 	}
 
 	@Override

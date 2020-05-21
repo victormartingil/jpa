@@ -3,13 +3,13 @@ package com.app.jpa.service;
 import java.util.List;
 import java.util.Optional;
 
-public interface CrudService <Entity>{
+public interface CrudService <Entity, Dto>{
 	
-	public List<Entity> findAll();
+	public List<Dto> findAll();
 
-	public Optional<Entity> findById(long id);
+	public Optional<Dto> findById(long id);
 
-	public void create(Entity entity);
+	public void create(Dto dto);
 
 	public void delete(long id);
 
