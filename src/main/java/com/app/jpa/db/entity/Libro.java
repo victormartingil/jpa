@@ -1,5 +1,6 @@
-package com.app.jpa.entity;
+package com.app.jpa.db.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -23,7 +24,7 @@ public class Libro {
 	}
 	
 	public Libro(long id) {
-		this(id, null, null);
+		this(id, null, new HashSet<>());
 	}
 	
 	public Libro(long id, String titulo, Set<Autor> autores) {
