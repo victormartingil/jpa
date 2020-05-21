@@ -20,6 +20,10 @@ public class AutorDto {
 		this(id, null, new HashSet<>());
 	}
 	
+	public AutorDto(String nombre) {
+		this(0, nombre, new HashSet<>());
+	}
+	
 	public AutorDto(long id, String nombre, Set<LibroDto> libros) {
 		this.id = id;
 		this.nombre= nombre;

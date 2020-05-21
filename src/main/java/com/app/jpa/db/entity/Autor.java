@@ -29,6 +29,10 @@ public class Autor {
 		this(id, null, new HashSet<>());
 	}
 	
+	public Autor (String nombre) {
+		this(0, nombre, new HashSet<>());
+	}
+	
 	public Autor(long id, String nombre, Set<Libro> libros) {
 		this.id = id;
 		this.nombre = nombre;

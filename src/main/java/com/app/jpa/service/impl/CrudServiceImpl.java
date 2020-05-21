@@ -17,8 +17,9 @@ public abstract class CrudServiceImpl<Entity, Dto, Repository extends CrudReposi
 	
 	protected Converter<Entity, Dto> converter;
 
-	public CrudServiceImpl(Repository repository) {
+	public CrudServiceImpl(Repository repository, Converter<Entity, Dto> converter) {
 		this.repository = repository;
+		this.converter = converter;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -42,7 +43,8 @@ public abstract class CrudServiceImpl<Entity, Dto, Repository extends CrudReposi
 			if(dto == null) {
 	    		throw new NoSuchElementException();
 	    	}
-			repository.save(converter.convertDtoToEntity(dto));
+			Entity entity = converter.convertDtoToEntity(dto);
+			repository.save(entity);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
