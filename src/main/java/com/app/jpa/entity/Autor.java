@@ -2,6 +2,7 @@ package com.app.jpa.entity;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,10 +18,14 @@ public class Autor {
 	
 	private String nombre;
 	
-	@ManyToMany (mappedBy="autores")
+	@ManyToMany (mappedBy="autores", cascade = CascadeType.ALL)
 	private Set<Libro> libros;
 
 	public Autor() {
+	}
+	
+	public Autor(long id) {
+		this(id, null, null);
 	}
 	
 	public Autor(long id, String nombre, Set<Libro> libros) {
