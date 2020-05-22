@@ -1,6 +1,7 @@
 package com.app.jpa.converter.impl;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -12,18 +13,21 @@ import com.app.jpa.db.entity.Autor;
 import com.app.jpa.db.entity.Libro;
 import com.app.jpa.dto.AutorDto;
 import com.app.jpa.dto.LibroDto;
+import com.app.jpa.repository.LibroRepository;
 
 @Component
 public class LibroConverter extends AbstractConverter<Libro, LibroDto>{
 
+	private LibroRepository libroRepository;
+	
 	@Autowired
-	public LibroConverter () {
-		
+	public LibroConverter (LibroRepository libroRepository) {
+		this.libroRepository = libroRepository;
 	}
 	
 	public Libro convertDtoToEntity(LibroDto dto) {
-		
-		Set<Autor> autores = new HashSet<>();
+		Optional<Libro> l = libroRepository.findById(dto.getId());
+		Set<Autor> autores = l.isPresent()?l.get().getAutores():new HashSet<>();
 		if (dto.getAutores() != null) {
 			for (AutorDto autor : dto.getAutores()) {
 				autores.add(new Autor(autor.getId()));
@@ -65,6 +69,10 @@ public class LibroConverter extends AbstractConverter<Libro, LibroDto>{
 		return set.stream()
 				  .map(this::convertDtoToEntity)
 				  .collect(Collectors.toSet());
+	}
+	
+	public Optional<LibroDto> convertEntityToDto(Optional<Libro> optional) {
+		return optional.map(this::convertEntityToDto);
 	}
 	
 	public void updateEntity (LibroDto dto, Libro entity) {

@@ -3,7 +3,6 @@ package com.app.jpa.db.entity;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,8 +18,14 @@ public class Autor {
 	
 	private String nombre;
 	
-	@ManyToMany (mappedBy="autores", cascade = CascadeType.ALL)
+	@ManyToMany (mappedBy="autores")
 	private Set<Libro> libros;
+	
+//	@ManyToMany
+//	@JoinTable(name = "join_autor_libro",
+//	   joinColumns = @JoinColumn(name = "autor_id"),
+//	   inverseJoinColumns = @JoinColumn(name = "libro_id"))
+//	private Set<Libro> libros;
 
 	public Autor() {
 	}
@@ -64,10 +69,10 @@ public class Autor {
 	}
 	
 	public void addLibro (Libro libro) {
+		libro.getAutores().add(this);
 		if (libros.contains(libro))
 			return;
 		libros.add(libro);
-		libro.getAutores().add(this);
 	}
 	
 	public void removeLibro (Libro libro) {

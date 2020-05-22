@@ -54,4 +54,18 @@ public class AutorDto {
 		this.libros = libros;
 	}
 	
+	public void addLibro (LibroDto libro) {
+		if (libros.contains(libro))
+			return;
+		libros.add(libro);
+		libro.getAutores().add(this);
+	}
+	
+	public void removeLibro (LibroDto libro) {
+		if (!libros.contains(libro))
+			return;
+		libros.remove(libro);
+		libro.getAutores().remove(this);
+	}
+	
 }
