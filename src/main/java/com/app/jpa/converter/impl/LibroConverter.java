@@ -13,30 +13,25 @@ import com.app.jpa.db.entity.Autor;
 import com.app.jpa.db.entity.Libro;
 import com.app.jpa.dto.AutorDto;
 import com.app.jpa.dto.LibroDto;
-import com.app.jpa.repository.LibroRepository;
 
 @Component
 public class LibroConverter extends AbstractConverter<Libro, LibroDto>{
 
-	private LibroRepository libroRepository;
-	
 	@Autowired
-	public LibroConverter (LibroRepository libroRepository) {
-		this.libroRepository = libroRepository;
+	public LibroConverter () {
 	}
 	
 	public Libro convertDtoToEntity(LibroDto dto) {
-		Optional<Libro> l = libroRepository.findById(dto.getId());
-		Set<Autor> autores = l.isPresent()?l.get().getAutores():new HashSet<>();
+		
+		Set <Autor> autores = new HashSet<>();
 		if (dto.getAutores() != null) {
 			for (AutorDto autor : dto.getAutores()) {
 				autores.add(new Autor(autor.getId()));
 			}
 		}
-		
 		return new Libro (dto.getId(),
-								dto.getTitulo(),
-								autores);
+							dto.getTitulo(),
+							autores);
 	}
 	
 	public LibroDto convertEntityToDto (Libro entity) {
